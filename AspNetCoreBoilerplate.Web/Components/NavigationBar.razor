@@ -1,0 +1,66 @@
+﻿@inherits FluxorComponent;
+
+<MudDrawer 
+    Open="@LayoutState.Value.IsNavigrationBarOpen" 
+    ClipMode="DrawerClipMode.Never" 
+    Variant="DrawerVariant.Temporary" 
+    Fixed 
+    OpenChanged="@HandleDrawerOpenChanged">
+    <MudNavMenu Style="height: 100vh;">
+        <MudStack Class="h-100" Justify="Justify.FlexStart" Spacing="0">
+            <MudStack Justify="Justify.FlexStart" Spacing="0">
+                <MudStack Style="@($"height: {LayoutState.Value.AppBarHeight}px")" Spacing="1" Class="py-0 px-2 mud-theme-primary" Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
+                    <MudImage ObjectFit="ObjectFit.Contain" Src="./logo.png" Style="height: 35px;"></MudImage>
+                    <MudText Color="Color.Dark" Style="font-weight: bold;">
+                        @AppConstants.APP_NAME
+                    </MudText>
+                </MudStack>
+                
+                <MudDivider DividerType="DividerType.FullWidth" Class="mb-3"/>
+
+                @foreach (var item in VisibleNavigationItems)
+                {
+                    @if (item.Children?.Any() == true && HasVisibleChildren(item))
+                    {
+                        <MudNavGroup 
+                            Title="@L[item.Title]" 
+                            Icon="@item.Icon" 
+                            Expanded="@IsGroupExpanded(item.Href)"
+                            ExpandedChanged="@((expanded) => HandleGroupExpandedChanged(item.Href, expanded))">
+                            @foreach (var child in GetVisibleChildren(item))
+                            {
+                                <MudNavLink 
+                                    Href="@child.Href" 
+                                    Icon="@child.Icon" 
+                                    ActiveClass="bg-primary"
+                                    Match="@NavLinkMatch.All"
+                                    OnClick="@(() => HandleNavLinkClick(child.Href))">
+                                    @L[item.Title]
+                                </MudNavLink>
+                            }
+                        </MudNavGroup>
+                    }
+                    else
+                    {
+                        <MudNavLink 
+                            Href="@item.Href" 
+                            Icon="@item.Icon" 
+                            Match="@NavLinkMatch.All"
+                            OnClick="@(() => HandleNavLinkClick(item.Href))">
+                            @L[item.Title]
+                        </MudNavLink>
+                    }
+                }
+            </MudStack>
+
+            <MudSpacer></MudSpacer>
+
+            <MudNavLink 
+                Icon="@Icons.Material.Filled.Settings" 
+                Match="@NavLinkMatch.All"
+                OnClick="@(() => HandleNavLinkClick("/settings/profile"))">
+                @L["Label_Settings"]
+            </MudNavLink>
+        </MudStack>
+    </MudNavMenu>
+</MudDrawer>

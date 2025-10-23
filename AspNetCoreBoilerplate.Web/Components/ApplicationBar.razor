@@ -1,0 +1,23 @@
+﻿<MudAppBar Style="@($"height: {LayoutState.Value.AppBarHeight}px")" ToolBarClass="px-4">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" OnClick="@ToggleDrawer" />
+
+    <MudSpacer />
+
+    <!-- Theme Toggle -->
+    <MudTooltip Text="Toggle Theme">
+        <MudIconButton Icon="@Icons.Material.Filled.NotificationsActive" 
+                       Color="Color.Inherit" 
+                       OnClick="@ToggleTheme" />
+    </MudTooltip>
+
+    <!-- Theme Toggle -->
+    <MudTooltip Text="Toggle Theme">
+        <MudIconButton Icon="@GetThemeIcon()" 
+                       Color="Color.Inherit" 
+                       OnClick="@ToggleTheme" />
+    </MudTooltip>
+    
+    <!-- User Menu -->
+    <UseProfileMenu></UseProfileMenu>
+</MudAppBar>
+

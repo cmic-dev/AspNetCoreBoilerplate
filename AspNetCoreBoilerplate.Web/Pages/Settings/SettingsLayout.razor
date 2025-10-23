@@ -1,0 +1,65 @@
+﻿@layout ProtectedLayout
+
+@inherits FluxorComponent
+
+<!-- Header -->
+<MudPaper Elevation="2" Class="pa-4 mb-4">
+    <MudGrid>
+        <MudItem xs="12" md="8">
+            <div class="d-flex align-center gap-4">
+                <MudAvatar Size="Size.Large" Color="Color.Primary">
+                    <MudImage Src="https://ui-avatars.com/api/?name=Sinthon+Seng&size=80&background=3b82f6&color=fff" />
+                </MudAvatar>
+                <div>
+                    <MudText Typo="Typo.h5">@UserProfileState.Value.UserProfile?.DisplayName</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        @@@UserProfileState.Value.UserProfile?.UserName • @UserProfileState.Value.UserProfile?.Role.DisplayName
+                    </MudText>
+                    @if(UserProfileState.Value.UserProfile?.LastSuccessfulLoginAt != null)
+                    {
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">
+                            Last login at: @UserProfileState.Value.UserProfile?.GetLastSuccessfulLoginAt()
+                        </MudText>    
+                    }
+                </div>
+            </div>
+        </MudItem>
+        @* <MudItem xs="12" md="4" Class="d-flex justify-end align-center">
+            <MudChip T="string" Color="Color.Success" Icon="@Icons.Material.Filled.Circle" Size="Size.Small">
+                @("Active")
+            </MudChip>
+        </MudItem> *@
+    </MudGrid>
+</MudPaper>
+
+<!-- Main Content -->
+<MudGrid>
+    <!-- Sidebar Navigation -->
+    <MudItem xs="12" md="3">
+        <MudPaper Elevation="2" Class="pa-2">
+            <MudNavMenu>
+                @foreach (var item in VisibleNavigationItems)
+                {
+                    <MudNavLink Icon="@item.Icon" Match="NavLinkMatch.All" 
+                        OnClick="@(() => HandleNavLinkClick(item.Href))">@L[item.Title]</MudNavLink>
+                }
+
+                <MudNavLink Icon="@Icons.Material.Filled.Security" 
+                            OnClick="@(() => ChangeSection(1))">Account & Security</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.Settings" 
+                            OnClick="@(() => ChangeSection(2))">Preferences</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.Notifications" 
+                            OnClick="@(() => ChangeSection(3))">Notifications</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.ShowChart" 
+                            OnClick="@(() => ChangeSection(4))">Activity</MudNavLink>
+            </MudNavMenu>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Content Area -->
+    <MudItem xs="12" md="9">
+        <MudPaper Elevation="2" Class="pa-4">
+            @ChildContent
+        </MudPaper>
+    </MudItem>
+</MudGrid>

@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="..\AspNetCoreBoilerplate.Shared\AspNetCoreBoilerplate.Shared.csproj" />
+	</ItemGroup>
+</Project>

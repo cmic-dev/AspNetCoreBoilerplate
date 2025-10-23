@@ -1,0 +1,71 @@
+﻿@page "/login"
+
+@layout AuthLayout
+@inherits FluxorComponent
+
+<PageTitle>@AppConstants.APP_NAME | Login</PageTitle>
+
+<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+    <LocalizedDataAnnotationsValidator></LocalizedDataAnnotationsValidator>
+
+    <MudCard Style="width: 450px;" Class="px-10 pb-10 pt-5" Elevation="3">
+        <MudCardContent Class="px-0">
+            <MudStack Class="px-0">
+                <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center">
+                    <MudImage Src="logo.png" Alt="logo" Height="125" Width="125"/>
+                    <MudText Typo="Typo.h5" Align="Align.Center" Class="text-bold">
+                        @L["Page_Login_Text"]
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        @L["Page_Login_SecondaryText"]
+                    </MudText>
+                </MudStack>
+            
+                <MudTextField 
+                    @bind-Value="loginModel.UserName"
+                    Label="@L["FormField_UserName"]"
+                    Placeholder="@L["FormField_UserName_Placeholder"]"
+                    Variant="Variant.Outlined"
+                    InputType="InputType.Text"
+                    For="@(() => loginModel.UserName)"/>
+                
+                <MudTextField 
+                   @bind-Value="loginModel.Password"
+                    Label="@L["FormField_Password"]"
+                    Placeholder="@L["FormField_Password_Placeholder"]"
+                    Variant="Variant.Outlined"
+                    InputType="InputType.Password"
+                    For="@(() => loginModel.Password)"/>
+
+                <MudLink Href="/forgot-password">
+                    @L["Button_ForgotPassword"]
+                </MudLink>
+                
+                @if (!string.IsNullOrEmpty(AuthState.Value.ErrorMessage))
+                {
+                    <MudAlert Severity="MudBlazor.Severity.Error" Class="mb-4">
+                        @AuthState.Value.ErrorMessage
+                    </MudAlert>
+                }
+            </MudStack>
+        </MudCardContent>
+        <MudCardActions Class="px-0 pb-0">
+            <MudButton 
+                ButtonType="ButtonType.Submit"
+                Variant="Variant.Filled"
+                Color="Color.Primary"
+                FullWidth
+                Disabled="@AuthState.Value.LoggingIn">
+                @if (AuthState.Value.LoggingIn)
+                {
+                    <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                    <span class="ml-2">@L["Button_Login_Loading"]</span>
+                }
+                else
+                {
+                    <span>@L["Button_Login"]</span>
+                }
+            </MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>

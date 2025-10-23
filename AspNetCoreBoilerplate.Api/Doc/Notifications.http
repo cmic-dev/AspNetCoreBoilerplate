@@ -1,0 +1,106 @@
+@AspNetCoreBoilerplate.Api_HostAddress = https://localhost:7107
+@AspNetCoreBoilerplate.Api_Version = 1
+@AspNetCoreBoilerplate.Api_AccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYTYyMmM0NC1lOWE0LTQxNGUtYjhhZi00NGQ3MGM5MGYwYjMiLCJ1bmlxdWVfbmFtZSI6InN5c3RlbSIsImVtYWlsIjoic3lzdGVtQGV4YW1wbGUuY29tIiwicm9sZSI6InN1cGVyX2FkbWluIiwianRpIjoiNWI5YzA0Y2YtMjUzYS00OGQ5LWFkMjktNzBiNTVkODc5OWEyIiwiaWF0IjoxNzYwNTE5MzA5LCJuYmYiOjE3NjA1MTkzMDksImV4cCI6MTc2MDUyMDIwOSwiaXNzIjoiQXNwTmV0Q29yZUJvaWxlcnBsYXRlIiwiYXVkIjoiQXNwTmV0Q29yZUJvaWxlcnBsYXRlLldlYiJ9.e1XB-TFoWnPiBIEhVRPDkmaxVFjNfdOzcdqd9QdOYVQ
+
+### Create Notification
+POST {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications
+Content-Type: application/json
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+{
+  "userId": "0a622c44-e9a4-414e-b8af-44d70c90f0b3",
+  "type": 0,
+  "subject": "Welcome to the System",
+  "message": "Welcome to our application! We're glad to have you here.",
+  "recipient": "system@example.com",
+  "priority": 1,
+  "templateId": "welcome_template",
+  "templateData": {
+    "userName": "system",
+    "welcomeMessage": "Welcome to our platform!"
+  },
+  "metadata": {
+    "source": "system",
+    "category": "welcome"
+  }
+}
+
+### Create Bulk Notifications
+POST {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/bulk
+Content-Type: application/json
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+{
+  "userIds": [
+    "0a622c44-e9a4-414e-b8af-44d70c90f0b3",
+    "1b733c55-f0b5-525f-c9cg-55e81d11g1c4"
+  ],
+  "type": 1,
+  "subject": "System Maintenance",
+  "message": "The system will undergo maintenance tonight from 2 AM to 4 AM.",
+  "priority": 2,
+  "templateId": "maintenance_template",
+  "templateData": {
+    "maintenanceStart": "2024-12-20T02:00:00Z",
+    "maintenanceEnd": "2024-12-20T04:00:00Z"
+  }
+}
+
+### Get Notification by ID
+GET {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/12345678-1234-1234-1234-123456789abc
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Delete Notification
+DELETE {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/12345678-1234-1234-1234-123456789abc?deletedBy=system
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Get User Notifications
+GET {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/user/0a622c44-e9a4-414e-b8af-44d70c90f0b3?PageNumber=1&PageSize=10&Type=0&Status=1&Priority=1&FromDate=2024-01-01T00:00:00Z&ToDate=2024-12-31T23:59:59Z&IsRead=false&SearchTerm=welcome
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Get User Notification Summary
+GET {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/user/0a622c44-e9a4-414e-b8af-44d70c90f0b3/summary
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Mark Notification as Read
+PATCH {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/12345678-1234-1234-1234-123456789abc/read
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Mark All User Notifications as Read
+PATCH {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/user/0a622c44-e9a4-414e-b8af-44d70c90f0b3/read-all
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Cleanup Old Notifications
+DELETE {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/cleanup?olderThanDays=90
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Get Notification Preference for Event Type
+GET {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/preferences/0a622c44-e9a4-414e-b8af-44d70c90f0b3/login_event
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Get All User Notification Preferences
+GET {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/preferences/0a622c44-e9a4-414e-b8af-44d70c90f0b3
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+### Update Notification Preference
+PUT {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/preferences/0a622c44-e9a4-414e-b8af-44d70c90f0b3
+Content-Type: application/json
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+{
+  "eventType": "login_event",
+  "emailEnabled": true,
+  "pushEnabled": false,
+  "inAppEnabled": true
+}
+
+### Set Do Not Disturb
+POST {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Notifications/preferences/0a622c44-e9a4-414e-b8af-44d70c90f0b3/do-not-disturb
+Content-Type: application/json
+Authorization: Bearer {{AspNetCoreBoilerplate.Api_AccessToken}}
+
+{
+  "enabled": true,
+  "startTime": "22:00:00",
+  "endTime": "08:00:00"
+}

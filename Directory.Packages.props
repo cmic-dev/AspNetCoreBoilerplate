@@ -1,0 +1,51 @@
+<Project>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+		<EnablePackageVersionOverride>true</EnablePackageVersionOverride>
+	</PropertyGroup>
+	<PropertyGroup>
+		<IsPublishable>true</IsPublishable>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageVersion Include="Microsoft.AspNetCore.Localization" Version="2.3.0" />
+		<PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.9" />
+		<PackageVersion Include="UAParser" Version="3.1.47" />
+	</ItemGroup>
+
+	<ItemGroup Label="API Versioning">
+		<PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+		<PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
+	</ItemGroup>
+
+	<ItemGroup Label="Caching">
+		<PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.9.0" />
+	</ItemGroup>
+
+	<ItemGroup Label="API Doc">
+		<PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+		<PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.4" />
+		<PackageVersion Include="Scalar.AspNetCore" Version="2.9.0" />
+	</ItemGroup>
+
+	<ItemGroup Label="Ef Core">
+		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9" />
+	</ItemGroup>
+
+	<ItemGroup Label="Blazor WebAssembly">
+		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.9" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.9" PrivateAssets="all" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.9" />
+		<PackageVersion Include="MudBlazor" Version="7.15.0" />
+		<PackageVersion Include="MudBlazor.Translations" Version="2.6.0" />
+		<PackageVersion Include="Fluxor.Blazor.Web" Version="6.8.0" />
+		<PackageVersion Include="Fluxor.Blazor.Web.ReduxDevTools" Version="6.8.0" />
+		<PackageVersion Include="Refit.HttpClientFactory" Version="8.0.0" />
+		<PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
+	</ItemGroup>
+</Project>

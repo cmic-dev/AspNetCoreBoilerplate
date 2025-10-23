@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<packagereference Include="Microsoft.AspNetCore.OpenApi" />
+		<packagereference Include="UAParser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AspNetCoreBoilerplate.Shared\AspNetCoreBoilerplate.Shared.csproj" />
+	</ItemGroup>
+</Project>

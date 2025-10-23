@@ -1,0 +1,84 @@
+﻿@page "/settings"
+@page "/settings/profile"
+
+@layout ProtectedLayout
+@inherits FluxorComponent
+
+<PageLayout Scrollable>
+    <SettingsLayout>
+        <MudStack>
+            <!-- Profile Section -->
+            <MudPaper Elevation="0">
+                <MudText Typo="Typo.h6" Class="mb-3">@L["Page_Settings_Profile_Information"]</MudText>
+                <EditForm Model="@generalProfileModel" OnValidSubmit="HandleSaveProfile">
+                    <LocalizedDataAnnotationsValidator></LocalizedDataAnnotationsValidator>
+                    <MudGrid Spacing="2">
+                        <MudItem xs="12" md="6">
+                            <MudTextField 
+                                @bind-Value="generalProfileModel.DisplayName" 
+                                For="() => generalProfileModel.DisplayName" 
+                                Label="@L["FormField_Display_Name"]" 
+                                Placeholder="@L["FormField_Display_Name_Placeholder"]" 
+                                Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12" md="6">
+                            <MudTextField 
+                                @bind-Value="generalProfileModel.PhoneNumber" 
+                                For="() => generalProfileModel.PhoneNumber" 
+                                Label="@L["FormField_Phone_Number"]" 
+                                Placeholder="@L["FormField_Phone_Number_Placeholder"]" 
+                                Variant="Variant.Outlined" 
+                                InputType="InputType.Telephone" />
+                        </MudItem>
+
+                        <MudItem xs="12" md="6">
+                            <MudSelect 
+                                @bind-Value="generalProfileModel.Gender" 
+                                For="() => generalProfileModel.Gender" 
+                                Label="@L["FormField_Gender"]" 
+                                Variant="Variant.Outlined"
+                                Placeholder="@L["FormField_Gender_Placeholder"]">
+                                <MudSelectItem Value="@("Male")">@L["FormField_Gender_Male"]</MudSelectItem>
+                                <MudSelectItem Value="@("Female")">@L["FormField_Gender_Female"]</MudSelectItem>
+                                <MudSelectItem Value="@("Other")">@L["FormField_Gender_Other"]</MudSelectItem>
+                            </MudSelect>
+                        </MudItem>
+
+                        <MudItem xs="12" md="6">
+                            <MudDatePicker 
+                                Date="generalProfileModel.DateOfBirth" 
+                                DateChanged="(date) => generalProfileModel.DateOfBirth = date"
+                                MaxDate="DateTime.Now"
+                                Label="@L["FormField_DateOfBirth"]" 
+                                Placeholder="@L["FormField_DateOfBirth_Placeholder"]" 
+                                Variant="Variant.Outlined" />
+                        </MudItem>
+
+                        <MudItem xs="12">
+                            <MudButton 
+                                ButtonType="ButtonType.Submit" 
+                                Variant="Variant.Filled" 
+                                Color="Color.Primary" 
+                                FullWidth="LayoutState.Value.IsMobile"
+                                StartIcon="@Icons.Material.Filled.Save">
+                                @if (UserProfileState.Value.IsUpdating)
+                                {
+                                    <span>
+                                        @L["Button_Saving_Changes"]
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>
+                                        @L["Button_Save_Changes"]
+                                    </span>
+                                }
+                            </MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </EditForm>
+            </MudPaper>
+        </MudStack>
+    </SettingsLayout>
+</PageLayout>

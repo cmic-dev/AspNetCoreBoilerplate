@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AspNetCoreBoilerplate.Modules.Auth.Core\AspNetCoreBoilerplate.Modules.Auth.Core.csproj" />
+		<ProjectReference Include="..\AspNetCoreBoilerplate.Shared\AspNetCoreBoilerplate.Shared.csproj" />
+	</ItemGroup>
+</Project>
+

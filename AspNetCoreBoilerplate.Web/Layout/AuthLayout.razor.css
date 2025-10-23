@@ -1,0 +1,19 @@
+﻿.bg-image {
+    background-image: url('./auth-layout-background.jpg');
+    background-size: cover;
+    background-position: left center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+}
+
+.copy-right {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}

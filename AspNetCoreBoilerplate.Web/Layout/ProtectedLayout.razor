@@ -1,0 +1,23 @@
+﻿@inherits BaseLayout
+
+@attribute [Authorize]
+
+<MudThemeProvider
+    Theme="ThemeState.Value.CurrentTheme"
+    IsDarkMode="ThemeState.Value.IsDarkMode"/>
+
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+
+<MudLayout> 
+    <!-- App Bar -->
+    <ApplicationBar/>
+    
+    <!-- Navigation -->
+    <NavigationBar/>
+    
+    <!-- Main Content -->
+    @Body
+</MudLayout>
+

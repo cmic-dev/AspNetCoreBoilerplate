@@ -1,0 +1,19 @@
+﻿@inherits FluxorComponent
+
+<MudSelect T="string" 
+    Label="Language" 
+    Value="@LocalizationState.Value.CurrentCulture" 
+    ValueChanged="OnCultureChanged" 
+    Variant="Variant.Outlined" 
+    Margin="Margin.Dense">
+    @if (LocalizationState.Value.IsLoading)
+    {
+        <MudSelectItem Value="@string.Empty">Loging...</MudSelectItem>
+    }
+    else
+    {
+        <MudSelectItem Value="@("en-US")">🇺🇸 English</MudSelectItem>
+        <MudSelectItem Value="@("kh-KH")">🇰🇭 ខ្មែរ (Khmer)</MudSelectItem>
+        <MudSelectItem Value="@("zh-CN")">🇨🇳 中文 (Chinese)</MudSelectItem>
+    }
+</MudSelect>

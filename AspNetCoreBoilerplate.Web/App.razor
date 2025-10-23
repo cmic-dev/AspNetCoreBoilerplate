@@ -1,0 +1,18 @@
+﻿<StoreInitializer/>
+
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(DefaultLayout)">
+            <NotAuthorized>
+                <NotAuthorizedPage></NotAuthorizedPage>
+            </NotAuthorized>
+        </AuthorizeRouteView>
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>@AppConstants.APP_NAME | Page Not found</PageTitle>
+        <LayoutView Layout="@typeof(DefaultLayout)">
+            <NotFoundPage></NotFoundPage>
+        </LayoutView>
+    </NotFound>
+</Router>

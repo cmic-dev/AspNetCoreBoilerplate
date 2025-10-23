@@ -1,0 +1,90 @@
+[
+  {
+    "Name": "Default",
+    "Description": "Classic blue theme",
+    "PrimaryColor": "#594AE2",
+    "SecondaryColor": "#FF6B6B",
+    "IsDarkMode": false,
+    "IsSelected": false
+  },
+  {
+    "Name": "Camel",
+    "Description": "Camel cement",
+    "PrimaryColor": "#F18C20",
+    "SecondaryColor": "#607D8B",
+    "IsDarkMode": false,
+    "IsSelected": false
+  },
+  {
+    "Name": "Corporate",
+    "Description": "Professional dark blue",
+    "PrimaryColor": "#1565C0",
+    "SecondaryColor": "#FF8A65",
+    "IsDarkMode": false,
+    "IsSelected": false
+  },
+  {
+    "Name": "Nature",
+    "Description": "Green and earth tones",
+    "PrimaryColor": "#2E7D32",
+    "SecondaryColor": "#8D6E63",
+    "IsDarkMode": false,
+    "IsSelected": false
+  },
+  {
+    "Name": "Sunset",
+    "Description": "Warm orange and pink",
+    "PrimaryColor": "#FF5722",
+    "SecondaryColor": "#E91E63",
+    "IsDarkMode": false,
+    "IsSelected": false
+  },
+  {
+    "Name": "Ocean",
+    "Description": "Cool blues and teals",
+    "PrimaryColor": "#0277BD",
+    "SecondaryColor": "#00ACC1",
+    "IsDarkMode": false,
+    "IsSelected": false
+  },
+  {
+    "Name": "Forest",
+    "Description": "Deep greens",
+    "PrimaryColor": "#1B5E20",
+    "SecondaryColor": "#689F38",
+    "IsDarkMode": false,
+    "IsSelected": false
+  },
+  {
+    "Name": "Dark Corporate",
+    "Description": "Dark professional",
+    "PrimaryColor": "#1565C0",
+    "SecondaryColor": "#FF8A65",
+    "IsDarkMode": true,
+    "IsSelected": false
+  },
+  {
+    "Name": "Dark Nature",
+    "Description": "Dark green theme",
+    "PrimaryColor": "#2E7D32",
+    "SecondaryColor": "#8D6E63",
+    "IsDarkMode": true,
+    "IsSelected": false
+  },
+  {
+    "Name": "Dark Ocean",
+    "Description": "Dark blue theme",
+    "PrimaryColor": "#0277BD",
+    "SecondaryColor": "#00ACC1",
+    "IsDarkMode": true,
+    "IsSelected": false
+  },
+  {
+    "Name": "Midnight",
+    "Description": "Pure dark theme",
+    "PrimaryColor": "#121212",
+    "SecondaryColor": "#BB86FC",
+    "IsDarkMode": true,
+    "IsSelected": false
+  }
+]

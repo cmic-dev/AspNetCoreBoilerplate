@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<UserSecretsId>f3bdfd82-dae2-4436-a901-029335aa9b48</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="wwwroot\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi"></PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+		<PackageReference Include="Scalar.AspNetCore" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Hybrid" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AspNetCoreBoilerplate.Core\AspNetCoreBoilerplate.Core.csproj" />
+		<ProjectReference Include="..\AspNetCoreBoilerplate.Modules.Auth\AspNetCoreBoilerplate.Modules.Auth.csproj" />
+		<ProjectReference Include="..\AspNetCoreBoilerplate.Shared\AspNetCoreBoilerplate.Shared.csproj" />
+	</ItemGroup>
+</Project>

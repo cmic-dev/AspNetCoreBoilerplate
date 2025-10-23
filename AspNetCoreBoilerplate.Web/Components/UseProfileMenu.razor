@@ -1,0 +1,68 @@
+﻿<MudMenu @ref="menuRef" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" Class="px-0">
+    <ActivatorContent>
+        @if (UserProfileState.Value.IsLoading)
+        {
+            <MudProgressCircular Color="Color.Inherit" Size="Size.Small" Indeterminate="true" />
+        }
+        else if (User != null)
+        {
+            <MudChip T="string" Color="Color.Transparent">
+                <AvatarContent>
+                    <MudAvatar>
+                        @if (string.IsNullOrEmpty(User.UserName))
+                        {
+                            <MudImage Src="@imageUrl" Alt="User Avatar" />
+                        }
+                        else
+                        {
+                            <MudText>@User.DisplayName.FirstOrDefault()</MudText>
+                        }
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>@User.DisplayName.TakeWithEllipsis(10)</ChildContent>
+            </MudChip>
+        }
+        else
+        {
+            <MudButton OnClick="Login"
+                   Color="Color.Inherit" 
+                   StartIcon="@Icons.Material.Filled.Login">
+                Login
+            </MudButton>
+        }
+    </ActivatorContent>
+    <ChildContent>
+        @if (User != null)
+        {
+            <MudPaper Width="250px">
+                <MudList Dense="true" Gutters="true" T="string">
+                    <MudListItem Disabled Style="cursor: default;">
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.subtitle1" Style="font-weight: 600; margin-bottom: -4px;">
+                                @User.DisplayName.TakeWithEllipsis(20)
+                            </MudText>
+    
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;">
+                                @User.Role.DisplayName
+                            </MudText>
+    
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 5px;">
+                                @User.Email.TakeWithEllipsis(25)
+                            </MudText>
+                        </MudStack>
+                    </MudListItem>
+    
+                    <MudDivider/>
+    
+                    <MudListItem hidden Text="Profile" Icon="@Icons.Material.Filled.AccountCircle" OnClick="NavigateToProfile" />
+                    <MudListItem hidden Text="Settings" Icon="@Icons.Material.Filled.Settings" OnClick="NavigateToSettings" />
+    
+                    <MudListItem Text="@L["Label_ChangePassword"]" Icon="@Icons.Material.Filled.LockReset" OnClick="ResetPassword" />
+                    <MudListItem Text="@L["Label_Logout"]" SecondaryText="@L["Label_Logout_SecondaryText"]" Icon="@Icons.Material.Filled.Logout" OnClick="Logout"/>
+                </MudList>
+            </MudPaper>
+        }
+    </ChildContent>
+</MudMenu>
+
+

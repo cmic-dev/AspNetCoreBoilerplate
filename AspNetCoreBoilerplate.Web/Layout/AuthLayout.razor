@@ -1,0 +1,19 @@
+﻿@inherits BaseLayout
+
+<MudThemeProvider
+    Theme="ThemeState.Value.CurrentTheme"
+    IsDarkMode="ThemeState.Value.IsDarkMode"/>
+
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+
+<div class="bg-image"></div>
+
+<MudStack Style="height: 100vh; width: 100vw;" AlignItems="AlignItems.Center" Justify="Justify.Center">
+    @Body
+</MudStack>
+
+<p class="copy-right">© 2025 CHIP MONG INSEE CEMENT CORPORATION. V.1.0</p>
+
+
