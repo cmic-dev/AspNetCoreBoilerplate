@@ -95,10 +95,7 @@ internal class AuthService : IAuthService
             _dbContext.Set<LoginHistory>().Add(LoginHistory.Create(
                 user,
                 ipAddress,
-                userAgent,
-                device,
-                platform,
-                browser));
+                userAgent));
 
             await _dbContext.SaveChangesAsync(ctn);
             await transaction.CommitAsync(ctn);
