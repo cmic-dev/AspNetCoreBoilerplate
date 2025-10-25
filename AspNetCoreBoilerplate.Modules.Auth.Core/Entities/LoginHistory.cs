@@ -28,7 +28,8 @@ public class LoginHistory : DomainEntity<Guid>
             UserAgent = userAgent,
             Device = device,
             Platform = platform,
-            Browser = browser
+            Browser = browser,
+            Timestamp = DateTime.UtcNow
         };
         return loginHistory;
     }
