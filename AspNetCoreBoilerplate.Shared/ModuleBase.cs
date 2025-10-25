@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AspNetCoreBoilerplate.Shared.Abstractions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -9,7 +10,6 @@ public abstract class ModuleBase : IModule
 {
     public abstract string Name { get; }
     public abstract Assembly Assembly { get; }
-    public abstract Version Version { get; }
 
     public virtual void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {

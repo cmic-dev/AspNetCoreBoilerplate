@@ -210,35 +210,17 @@ namespace AspNetCoreBoilerplate.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly?>("DateOfBirth")
-                        .HasColumnType("date");
-
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedByDevice")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedByIp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("DeletedById")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FailedLoginAttempts")
                         .HasColumnType("int");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -264,12 +246,6 @@ namespace AspNetCoreBoilerplate.Core.Migrations
                     b.Property<DateTime?>("PasswordChangedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfilePictureUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("RequiresPasswordChange")
                         .HasColumnType("bit");
 
@@ -282,13 +258,14 @@ namespace AspNetCoreBoilerplate.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("RoleId");
 
                     b.HasIndex("UserName")
                         .IsUnique();
+
+                    b.HasIndex("UserName", "IsDeleted")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = CAST(0 AS bit)");
 
                     b.ToTable("Users", "auth");
 
@@ -296,8 +273,7 @@ namespace AspNetCoreBoilerplate.Core.Migrations
                         new
                         {
                             Id = new Guid("0a622c44-e9a4-414e-b8af-44d70c90f0b3"),
-                            DisplayName = "System",
-                            Email = "system@example.com",
+                            Email = "",
                             FailedLoginAttempts = 0,
                             IsDeleted = false,
                             IsSystem = true,
@@ -309,16 +285,52 @@ namespace AspNetCoreBoilerplate.Core.Migrations
                         new
                         {
                             Id = new Guid("b348eeb7-f5b7-4076-9a57-168f9052c342"),
-                            DisplayName = "Super Admin",
-                            Email = "superadmin@example.com",
+                            Email = "",
                             FailedLoginAttempts = 0,
                             IsDeleted = false,
                             IsSystem = true,
                             Password = "sD3fPKLnFKZUjnSV4qA/XoJOqsmDfNfxWcZ7kPtLc0I=",
                             RequiresPasswordChange = false,
                             RoleId = new Guid("a1a2e5e2-95d3-4cb6-a56d-4f7e01c8921c"),
-                            UserName = "super_admin"
+                            UserName = "admin"
                         });
+                });
+
+            modelBuilder.Entity("AspNetCoreBoilerplate.Modules.Auth.Core.Entities.UserProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly?>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Gender")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ProfilePictureUrl")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserProfiles", "auth");
                 });
 
             modelBuilder.Entity("AspNetCoreBoilerplate.Modules.Auth.Core.Entities.LoginHistory", b =>
@@ -354,9 +366,22 @@ namespace AspNetCoreBoilerplate.Core.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("AspNetCoreBoilerplate.Modules.Auth.Core.Entities.UserProfile", b =>
+                {
+                    b.HasOne("AspNetCoreBoilerplate.Modules.Auth.Core.Entities.User", "User")
+                        .WithOne("UserProfile")
+                        .HasForeignKey("AspNetCoreBoilerplate.Modules.Auth.Core.Entities.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("AspNetCoreBoilerplate.Modules.Auth.Core.Entities.User", b =>
                 {
                     b.Navigation("RefreshTokens");
+
+                    b.Navigation("UserProfile");
                 });
 #pragma warning restore 612, 618
         }

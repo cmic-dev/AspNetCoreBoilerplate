@@ -1,23 +1,22 @@
-﻿using AspNetCoreBoilerplate.Shared.Controllers;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
+﻿using AspNetCoreBoilerplate.Modules.Auth.Application.DTOs;
+using AspNetCoreBoilerplate.Modules.Auth.Application.Abstractions;
+using AspNetCoreBoilerplate.Shared.Abstractions;
 using AspNetCoreBoilerplate.Shared.RateLimiter;
 using Microsoft.AspNetCore.Authorization;
-using AspNetCoreBoilerplate.Modules.Auth.Application.Services;
-using AspNetCoreBoilerplate.Shared;
-using AspNetCoreBoilerplate.Modules.Auth.Application.DTOs;
-using AspNetCoreBoilerplate.Shared.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace AspNetCoreBoilerplate.Modules.Auth.Controllers;
 
+[ApiController]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
-[ApiVersion("2.0")]
-public class AuthController : AppControllerBase
+public class AuthController : ControllerBase
 {
-    private readonly AuthService _authService;
+    private readonly IAuthService _authService;
     private readonly IUserContext _userContext;
 
-    public AuthController(AuthService authService, IUserContext userContext)
+    public AuthController(IAuthService authService, IUserContext userContext)
     {
         _authService = authService;
         _userContext = userContext;

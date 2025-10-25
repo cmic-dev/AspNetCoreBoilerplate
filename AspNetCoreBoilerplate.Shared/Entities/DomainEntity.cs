@@ -4,6 +4,7 @@ namespace AspNetCoreBoilerplate.Shared.Entities;
 
 public interface IDomainEntity
 {
+    void ClearDomainEvents();
     IReadOnlyList<IDomainEvent> DomainEvents();
 }
 
@@ -16,6 +17,9 @@ public class DomainEntity<TKey> : IDomainEntity
     public IReadOnlyList<IDomainEvent> DomainEvents() =>
         domainEvents.ToList().AsReadOnly();
 
-    public void AddDomainEvent(IDomainEvent domainEvent) =>
+    public void RecordDomainEvent(IDomainEvent domainEvent) =>
         domainEvents.Add(domainEvent);
+
+    public void ClearDomainEvents() =>
+        domainEvents.Clear();
 }

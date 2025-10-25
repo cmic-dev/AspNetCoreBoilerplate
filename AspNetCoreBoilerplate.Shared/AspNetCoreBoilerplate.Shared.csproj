@@ -11,6 +11,6 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Models\" />
+	  <Folder Include="Exceptions\Authentication\" />
 	</ItemGroup>
 </Project>

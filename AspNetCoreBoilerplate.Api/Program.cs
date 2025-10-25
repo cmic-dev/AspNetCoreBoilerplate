@@ -1,10 +1,9 @@
-using AspNetCoreBoilerplate.Api.OpenApi;
-using AspNetCoreBoilerplate.Api.ProblemDetails;
-using AspNetCoreBoilerplate.Api.Cache;
-using AspNetCoreBoilerplate.Api.RateLimiter;
+using AspNetCoreBoilerplate.Api.ApiDoc;
 using AspNetCoreBoilerplate.Api.ApiVersioning;
-using AspNetCoreBoilerplate.Api.Cors;
 using AspNetCoreBoilerplate.Api.Authorization;
+using AspNetCoreBoilerplate.Api.Cors;
+using AspNetCoreBoilerplate.Api.ProblemDetails;
+using AspNetCoreBoilerplate.Api.RateLimiter;
 using AspNetCoreBoilerplate.Core;
 using AspNetCoreBoilerplate.Core.Extensions;
 using AspNetCoreBoilerplate.Modules.Auth;
@@ -28,10 +27,6 @@ builder.Services.AddSwaggerGen();
 // Scalar
 builder.Services.ConfigureOptions<ConfigureScalarOptions>();
 
-// Cache
-builder.Services.ConfigureOptions<ConfigureHybridCacheOptions>();
-builder.Services.AddHybridCache();
-
 // RateLimiter
 builder.Services.ConfigureOptions<ConfigureRateLimiterOptions>();
 builder.Services.AddRateLimiter();
@@ -51,7 +46,9 @@ builder.Services.ConfigureOptions<ConfigureAuthorizationOptions>();
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
-// Modules
+// Cache
+builder.Services.AddHybridCache();
+
 builder.ConfigureModules(orchestrator =>
 {
     orchestrator.AddModule(new CoreModule());
@@ -60,7 +57,6 @@ builder.ConfigureModules(orchestrator =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

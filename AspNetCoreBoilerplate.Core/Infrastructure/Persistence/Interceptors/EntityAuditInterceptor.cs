@@ -1,4 +1,4 @@
-﻿using AspNetCoreBoilerplate.Shared;
+﻿using AspNetCoreBoilerplate.Shared.Abstractions;
 using AspNetCoreBoilerplate.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -28,9 +28,7 @@ public class EntityAuditInterceptor(IUserContext userContext) : SaveChangesInter
     {
         if (context == null) return;
 
-        var currentUser = userContext.UserName;
-        var ipAddress = userContext.IpAddress;
-        var device = userContext.Device;
+        var userId = userContext.UserId;
 
         var entries = context.ChangeTracker.Entries()
             .Where(e => e.State == EntityState.Added ||
@@ -45,11 +43,11 @@ public class EntityAuditInterceptor(IUserContext userContext) : SaveChangesInter
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        auditableEntity.RecordCreatedBy(currentUser, ipAddress, device);
+                        auditableEntity.RecordCreatedBy(userId);
                         break;
 
                     case EntityState.Modified:
-                        auditableEntity.RecordUpdatedBy(currentUser, ipAddress, device);
+                        auditableEntity.RecordUpdatedBy(userId);
                         break;
                 }
             }
@@ -58,7 +56,7 @@ public class EntityAuditInterceptor(IUserContext userContext) : SaveChangesInter
             if (entry.State == EntityState.Deleted && entry.Entity is ISoftDeletableEntity softDeletable)
             {
                 entry.State = EntityState.Modified;
-                softDeletable.SoftDelete(currentUser, ipAddress, device);
+                softDeletable.SoftDelete(userId);
             }
         }
     }

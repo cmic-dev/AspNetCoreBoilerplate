@@ -1,17 +1,13 @@
 ﻿using AspNetCoreBoilerplate.Core.Infrastructure.Persistence.Interceptors;
-using AspNetCoreBoilerplate.Shared;
+using AspNetCoreBoilerplate.Shared.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreBoilerplate.Core.Infrastructure.Persistence;
 
-public class AppDbContext(
-    EntityAuditInterceptor auditIcp,
+internal class AppDbContext(EntityAuditInterceptor auditIcp,
     DomainEventDispatcherInterceptor eventDipatcherIcp,
-    IModuleOrchestrator orchestrator,
-    DbContextOptions<AppDbContext> options) :
-    DbContext(options), IAppDbContext
+    IModuleOrchestrator orchestrator, DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(auditIcp);

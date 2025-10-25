@@ -18,8 +18,8 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         {
             new Claim(ClaimTypes.NameIdentifier, _currentAuth.Id.ToString()),
             new Claim(ClaimTypes.Name, _currentAuth.UserName),
-            new Claim(ClaimTypes.GivenName, _currentAuth.DisplayName ?? ""),
-            new Claim(ClaimTypes.Surname, _currentAuth.DisplayName ?? ""),
+            new Claim(ClaimTypes.GivenName, _currentAuth.FullName ?? ""),
+            new Claim(ClaimTypes.Surname, _currentAuth.FullName ?? ""),
             new Claim(ClaimTypes.Email, _currentAuth.Email ?? ""),
             new Claim(ClaimTypes.Role, _currentAuth.Role.Name),
         };

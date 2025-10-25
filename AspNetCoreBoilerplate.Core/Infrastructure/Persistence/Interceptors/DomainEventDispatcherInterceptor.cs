@@ -7,7 +7,13 @@ namespace AspNetCoreBoilerplate.Core.Infrastructure.Persistence.Interceptors;
 
 public class DomainEventDispatcherInterceptor : SaveChangesInterceptor
 {
+    private readonly IDomainEventDispatcher _dispatcher;
     private readonly List<IDomainEvent> _domainEvents = [];
+
+    public DomainEventDispatcherInterceptor(IDomainEventDispatcher dispatcher)
+    {
+        _dispatcher = dispatcher;
+    }
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
@@ -26,8 +32,25 @@ public class DomainEventDispatcherInterceptor : SaveChangesInterceptor
 
     public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
     {
-        DispatchCapturedEvents().GetAwaiter().GetResult(); // Ensure sync
-        return base.SavedChanges(eventData, result);
+        var savedChangesResult = base.SavedChanges(eventData, result);
+        try
+        {
+            var eventsToDispatch = _domainEvents
+                .OrderBy(x => x.CreatedAt)
+                .Where(e => !e.IsDispatched)
+                .ToList();
+
+            if (!eventsToDispatch.Any())
+                return savedChangesResult;
+
+            _dispatcher.DispatchAsync(eventsToDispatch).GetAwaiter().GetResult();
+        }
+        finally
+        {
+            _domainEvents.Clear();
+            ClearDomainEventsFromEntities(eventData.Context);
+        }
+        return savedChangesResult;
     }
 
     public override async ValueTask<int> SavedChangesAsync(
@@ -35,35 +58,51 @@ public class DomainEventDispatcherInterceptor : SaveChangesInterceptor
         int result,
         CancellationToken cancellationToken = default)
     {
-        await DispatchCapturedEvents(cancellationToken);
-        return await base.SavedChangesAsync(eventData, result, cancellationToken);
+        var savedChangesResult = await base.SavedChangesAsync(eventData, result, cancellationToken);
+        try
+        {
+            var eventsToDispatch = _domainEvents
+                .OrderBy(x => x.CreatedAt)
+                .Where(e => !e.IsDispatched)
+                .ToList();
+
+            if (!eventsToDispatch.Any())
+                return savedChangesResult;
+
+            await _dispatcher.DispatchAsync(eventsToDispatch, cancellationToken);
+        }
+        finally
+        {
+            _domainEvents.Clear();
+            ClearDomainEventsFromEntities(eventData.Context);
+        }
+        return savedChangesResult;
     }
 
-    public void CaptureDomainEvents(DbContext? context)
+    private void CaptureDomainEvents(DbContext? context)
     {
         _domainEvents.Clear();
-
         if (context == null)
             return;
 
         var domainEvents = context.ChangeTracker.Entries<IDomainEntity>()
             .SelectMany(e => e.Entity.DomainEvents())
             .ToList();
-
         _domainEvents.AddRange(domainEvents);
     }
 
-    private async Task DispatchCapturedEvents(CancellationToken cancellationToken = default)
+    private static void ClearDomainEventsFromEntities(DbContext? context)
     {
-        if (_domainEvents.Count == 0)
+        if (context == null)
             return;
 
-        var tasks = _domainEvents.Select(async domainEvent =>
-        {
-            // Dispatch the domain event (e.g., publish to a message broker)
-            await Task.CompletedTask;
-        });
+        var entities = context.ChangeTracker.Entries<IDomainEntity>()
+            .Select(e => e.Entity)
+            .ToList();
 
-        await Task.WhenAll(tasks);
+        foreach (var entity in entities)
+        {
+            entity.ClearDomainEvents();
+        }
     }
 }

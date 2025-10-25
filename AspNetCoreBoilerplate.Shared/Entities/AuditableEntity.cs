@@ -2,46 +2,32 @@
 
 public interface IAuditableEntity
 {
-    string? CreatedBy { get; }
-    string? CreatedByIp { get; }
-    string? CreatedByDevice { get; }
-    DateTime? CreatedAt { get; }
+    Guid? CreatedById { get; }
+    DateTime CreatedAt { get; }
+    void RecordCreatedBy(Guid? createdById);
 
-    string? UpdatedBy { get; }
+    Guid? UpdatedById { get; }
     DateTime? UpdatedAt { get; }
-    string? UpdatedByIp { get; }
-    string? UpdatedByDevice { get; }
-
-    void RecordCreatedBy(string? createdBy, string? createdByIp = null, string? createdByDevice = null);
-    void RecordUpdatedBy(string? updatedBy, string? updatedByIp = null, string? updatedByDevice = null);
+    void RecordUpdatedBy(Guid? updatedById);
 }
 
 public class AuditableEntity<TKey> : DomainEntity<TKey>, IAuditableEntity
 {
-    public string? CreatedBy { get; private set; }
-    public string? CreatedByIp { get; private set; }
-    public string? CreatedByDevice { get; private set; }
-    public DateTime? CreatedAt { get; private set; }
+    public Guid? CreatedById { get; private set; }
+    public DateTime CreatedAt { get; private set; }
 
-    public string? UpdatedBy { get; private set; }
-    public string? UpdatedByIp { get; private set; }
-    public string? UpdatedByDevice { get; private set; }
+    public Guid? UpdatedById { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
 
-
-    public void RecordCreatedBy(string? createdBy, string? createdByIp = null, string? createdByDevice = null)
+    public void RecordCreatedBy(Guid? createdById)
     {
-        CreatedBy = createdBy;
-        CreatedByIp = createdByIp;
-        CreatedByDevice = createdByDevice;
+        CreatedById = createdById;
         CreatedAt = DateTime.UtcNow;
     }
 
-    public void RecordUpdatedBy(string? updatedBy, string? updatedByIp = null, string? updatedByDevice = null)
+    public void RecordUpdatedBy(Guid? updatedById)
     {
-        UpdatedBy = updatedBy;
-        UpdatedByIp = updatedByIp;
-        UpdatedByDevice = updatedByDevice;
+        UpdatedById = updatedById;
         UpdatedAt = DateTime.UtcNow;
     }
 }

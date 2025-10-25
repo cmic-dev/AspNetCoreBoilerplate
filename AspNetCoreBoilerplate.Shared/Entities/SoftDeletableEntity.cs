@@ -3,40 +3,31 @@
 public interface ISoftDeletableEntity
 {
     bool IsDeleted { get; }
-    string? DeletedBy { get; }
+    Guid? DeletedById { get; }
     DateTime? DeletedAt { get; }
-    string? DeletedByIp { get; }
-    string? DeletedByDevice { get; }
-
-    void SoftDelete(string? deletedBy, string? deletedByIp = null, string? deletedByDevice = null);
-    void Restore();
+    void SoftDelete(Guid? deletedById);
 }
 
 public class SoftDeletableEntity<TKey> : DomainEntity<TKey>, ISoftDeletableEntity
 {
-    public bool IsDeleted { get; private set; } = false;
-    public string? DeletedBy { get; private set; }
-    public string? DeletedByIp { get; private set; }
-    public string? DeletedByDevice { get; private set; }
+    public bool IsDeleted { get; private set; }
+    public Guid? DeletedById { get; private set; }
     public DateTime? DeletedAt { get; private set; }
 
-    public void SoftDelete(string? deletedBy, string? deletedByIp = null, string? deletedByDevice = null)
+    public void SoftDelete(Guid? deletedById)
     {
         IsDeleted = true;
-        DeletedBy = deletedBy;
-        DeletedByIp = deletedByIp;
-        DeletedByDevice = deletedByDevice;
+        DeletedById = deletedById;
         DeletedAt = DateTime.UtcNow;
     }
 
     public void Restore()
     {
         IsDeleted = false;
-        DeletedBy = null;
-        DeletedByIp = null;
-        DeletedByDevice = null;
+        DeletedById = null;
         DeletedAt = null;
     }
 }
 
 public class SoftDeletableEntity : SoftDeletableEntity<Guid>;
+

@@ -3,8 +3,7 @@
 public class AuthResponseDto
 {
     public string AccessToken { get; set; } = string.Empty;
-    public DateTime TokenExpiry { get; init; }
+    public DateTime TokenExpiry { get; set; }
     public string RefreshToken { get; set; } = string.Empty;
-
-    public UserInfoDto UserInfo { get; set; } = default(UserInfoDto);
+    public Guid UserId { get; set; }
 }

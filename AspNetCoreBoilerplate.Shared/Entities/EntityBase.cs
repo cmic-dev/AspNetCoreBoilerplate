@@ -1,57 +1,41 @@
-﻿namespace AspNetCoreBoilerplate.Shared.Entities;
+﻿
+namespace AspNetCoreBoilerplate.Shared.Entities;
 
 public class EntityBase<TKey> : DomainEntity<TKey>, IAuditableEntity, ISoftDeletableEntity
 {
-    public string? CreatedBy { get; private set; }
-    public string? CreatedByIp { get; private set; }
-    public string? CreatedByDevice { get; private set; }
-    public DateTime? CreatedAt { get; private set; }
+    public Guid? CreatedById { get; private set; }
+    public DateTime CreatedAt { get; private set; }
 
-    public string? UpdatedBy { get; private set; }
-    public string? UpdatedByIp { get; private set; }
-    public string? UpdatedByDevice { get; private set; }
-    public DateTime? UpdatedAt { get; private set; }
-
-
-    public void RecordCreatedBy(string? createdBy, string? createdByIp = null, string? createdByDevice = null)
+    public void RecordCreatedBy(Guid? createdById)
     {
-        CreatedBy = createdBy;
-        CreatedByIp = createdByIp;
-        CreatedByDevice = createdByDevice;
+        CreatedById = createdById;
         CreatedAt = DateTime.UtcNow;
     }
 
-    public void RecordUpdatedBy(string? updatedBy, string? updatedByIp = null, string? updatedByDevice = null)
+    public Guid? UpdatedById { get; private set; }
+    public DateTime? UpdatedAt { get; private set; }
+
+    public void RecordUpdatedBy(Guid? updatedById)
     {
-        UpdatedBy = updatedBy;
-        UpdatedByIp = updatedByIp;
-        UpdatedByDevice = updatedByDevice;
+        UpdatedById = updatedById;
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public bool IsDeleted { get; private set; } = false;
-    public string? DeletedBy { get; private set; }
-    public string? DeletedByIp { get; private set; }
-    public string? DeletedByDevice { get; private set; }
+    public bool IsDeleted { get; private set; }
+    public Guid? DeletedById { get; private set; }
     public DateTime? DeletedAt { get; private set; }
 
-    public void SoftDelete(string? deletedBy, string? deletedByIp = null, string? deletedByDevice = null)
+    public void SoftDelete(Guid? deletedById)
     {
         IsDeleted = true;
-        DeletedBy = deletedBy;
-        DeletedByIp = deletedByIp;
-        DeletedByDevice = deletedByDevice;
+        DeletedById = deletedById;
         DeletedAt = DateTime.UtcNow;
     }
 
     public void Restore()
     {
         IsDeleted = false;
-        DeletedBy = null;
-        DeletedByIp = null;
-        DeletedByDevice = null;
+        DeletedById = null;
         DeletedAt = null;
     }
 }
-
-public class EntityBase : EntityBase<Guid>;

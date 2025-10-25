@@ -47,10 +47,10 @@ public partial class UserProfile
     {
         generalProfileModel = new UpdateProfileRequestDto()
         {
-            DisplayName = userDetails.DisplayName,
+            FullName = userDetails.FullName,
             Gender = userDetails.Gender,
             PhoneNumber = userDetails.PhoneNumber,
-            DateOfBirth = userDetails.DateOfBirth
+            DateOfBirth = userDetails.DateOfBirth.HasValue ? userDetails.DateOfBirth.Value.ToDateTime(TimeOnly.MinValue) : null
         };
 
         emailModel = new UpdateEmailRequestDto()

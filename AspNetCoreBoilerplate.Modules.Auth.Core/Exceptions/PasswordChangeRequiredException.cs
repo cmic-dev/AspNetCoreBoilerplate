@@ -1,7 +1,7 @@
 ﻿using AspNetCoreBoilerplate.Shared.Exceptions;
 using Microsoft.AspNetCore.Http;
 
-namespace AspNetCoreBoilerplate.Modules.Auth.Application.Exceptions;
+namespace AspNetCoreBoilerplate.Modules.Auth.Core.Exceptions;
 
 public class PasswordChangeRequiredException : DomainException
 {

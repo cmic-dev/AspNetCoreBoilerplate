@@ -15,11 +15,11 @@
                         }
                         else
                         {
-                            <MudText>@User.DisplayName.FirstOrDefault()</MudText>
+                            <MudText>@User.FullName.FirstOrDefault()</MudText>
                         }
                     </MudAvatar>
                 </AvatarContent>
-                <ChildContent>@User.DisplayName.TakeWithEllipsis(10)</ChildContent>
+                <ChildContent>@User.FullName.TakeWithEllipsis(10)</ChildContent>
             </MudChip>
         }
         else
@@ -39,7 +39,7 @@
                     <MudListItem Disabled Style="cursor: default;">
                         <MudStack Spacing="0">
                             <MudText Typo="Typo.subtitle1" Style="font-weight: 600; margin-bottom: -4px;">
-                                @User.DisplayName.TakeWithEllipsis(20)
+                                @User.FullName.TakeWithEllipsis(20)
                             </MudText>
     
                             <MudText Typo="Typo.body2" Style="margin-bottom: 4px;">

@@ -1,5 +1,0 @@
-﻿@AspNetCoreBoilerplate.Api_HostAddress = https://localhost:7107
-@AspNetCoreBoilerplate.Api_Version = 1
-
-### Health Check
-GET {{AspNetCoreBoilerplate.Api_HostAddress}}/api/v{{AspNetCoreBoilerplate.Api_Version}}/Health

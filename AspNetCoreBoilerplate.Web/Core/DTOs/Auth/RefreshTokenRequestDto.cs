@@ -7,7 +7,7 @@ public class RefreshTokenRequestDto
 
     }
 
-    public RefreshTokenRequestDto(string? refreshToken)
+    public RefreshTokenRequestDto(string refreshToken)
     {
         RefreshToken = refreshToken;
     }

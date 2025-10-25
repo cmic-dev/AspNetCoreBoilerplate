@@ -8,7 +8,5 @@ public class LoginRequestDto
     public string UserName { get; set; } = string.Empty;
 
     [Required]
-    [MinLength(3)]
-    [MaxLength(100)]
     public string Password { get; set; } = string.Empty;
 }
