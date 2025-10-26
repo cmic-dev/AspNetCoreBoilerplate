@@ -34,6 +34,7 @@ public class AuthModule : ModuleBase
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IProfileService, ProfileService>();
 
         services.AddScoped<IDomainEventHandler<UserCreatedEvent>, CreateUserProfileHandler>();

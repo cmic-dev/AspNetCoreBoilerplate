@@ -27,6 +27,19 @@ public class UsersController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet]
+    [Authorize(Roles = Roles.SuperAdmin)]
+    [EnableRateLimiting(RateLimiterPolicies.Authenticated)]
+    public async Task<ActionResult<IEnumerable<UserDetailsDto>>> GetAllUserProfiles(CancellationToken ctn = default)
+    {
+        var users = await _userProfileService.GetAllActiveUsersAsync(ctn);
+
+        _logger.LogInformation("Admin user {UserId} retrieved all active users from {IpAddress}",
+            _userContext.UserId, _userContext.IpAddress);
+
+        return Ok(users);
+    }
+
     [HttpPost]
     [Authorize(Roles = Roles.SuperAdmin)]
     [EnableRateLimiting(RateLimiterPolicies.Authenticated)]

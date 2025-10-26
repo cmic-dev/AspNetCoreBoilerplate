@@ -48,34 +48,6 @@ internal class ProfileService : IProfileService
         return user;
     }
 
-    public async Task<IEnumerable<UserDetailsDto>> GetAllActiveUsersAsync(CancellationToken ctn = default)
-    {
-        return await _dbContext.Set<User>()
-            .AsNoTracking()
-            .Where(u => !u.IsDeleted)
-            .Select(u => new UserDetailsDto
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                FullName = u.UserProfile != null ? u.UserProfile.FullName : u.UserName,
-                Email = u.Email,
-                ProfilePictureUrl = u.UserProfile != null ? u.UserProfile.ProfilePictureUrl : null,
-                Gender = u.UserProfile != null ? u.UserProfile.Gender : null,
-                PhoneNumber = u.UserProfile != null ? u.UserProfile.PhoneNumber : null,
-                DateOfBirth = u.UserProfile != null ? u.UserProfile.DateOfBirth : null,
-                IsActive = !u.IsDeleted,
-                LastSuccessfulLoginAt = u.LastSuccessfulLoginAt,
-                PasswordChangedAt = u.PasswordChangedAt,
-                Role = new RoleDto
-                {
-                    Id = u.RoleId,
-                    Name = u.Role.Name,
-                    DisplayName = u.Role.DisplayName
-                }
-            })
-            .ToListAsync(ctn);
-    }
-
     public async Task<UserDetailsDto?> UpdateUserProfileAsync(Guid userId, UpdateUserProfileDto dto, CancellationToken ctn = default)
     {
         if (userId == Guid.Empty)

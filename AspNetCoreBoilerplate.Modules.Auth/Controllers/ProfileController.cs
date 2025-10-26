@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace AspNetCoreBoilerplate.Modules.Auth.Controllers;
@@ -70,19 +69,6 @@ public class ProfileController : ControllerBase
             _userContext.UserId, userId, _userContext.IpAddress);
 
         return Ok(userProfile);
-    }
-
-    [HttpGet]
-    [Authorize(Roles = Roles.SuperAdmin)]
-    [EnableRateLimiting(RateLimiterPolicies.Authenticated)]
-    public async Task<ActionResult<IEnumerable<UserDetailsDto>>> GetAllActiveUsers(CancellationToken ctn = default)
-    {
-        var users = await _userProfileService.GetAllActiveUsersAsync(ctn);
-
-        _logger.LogInformation("Admin user {UserId} retrieved all active users from {IpAddress}",
-            _userContext.UserId, _userContext.IpAddress);
-
-        return Ok(users);
     }
 
     [HttpPut("me")]
@@ -176,6 +162,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpDelete("me/picture")]
+    [EnableRateLimiting(RateLimiterPolicies.Authenticated)]
     public async Task<IActionResult> DeleteCurrentUserProfilePicture(CancellationToken ctn = default)
     {
         if (!_userContext.UserId.HasValue)
