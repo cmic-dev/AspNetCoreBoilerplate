@@ -22,6 +22,7 @@ public static class ApiServiceConfigurationExtensions
             options.BaseAddress = new Uri(apiUrl));
 
         services.AddScoped<ProfileService>();
+        services.AddScoped<UserService>();
 
         return services;
     }
